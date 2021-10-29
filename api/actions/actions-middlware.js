@@ -17,9 +17,13 @@ async function validateActionId(req, res, next){
 
 function validateAction(req, res, next) {
     const {description, notes, completed, project_id} = req.body
-    if(!description, !project_id, !notes, !completed){
+    if(!description, !project_id, !completed, !project_id, !notes){
         res.status(400).json({ message: "missing required description, notes and completed status" })
     }else{
+        req.description = description
+        req.notes = notes
+        req.completed = completed
+        req.project_id = project_id
         next()
     }
 }

@@ -5,6 +5,7 @@ async function validateProjectId(req, res, next) {
     try{
         const possible = await Projects.get(req.params.id)
         if(possible) {
+            req.projects = possible
             next()
         } else {
             next({ status: 404, message: 'project not found' })
@@ -19,6 +20,9 @@ function validateProject(req, res, next) {
     if(!name, !description, !completed){
         res.status(400).json({ message: "missing reqired name, description and completed status" })
     }else{
+        req.name = name
+        req.description = description
+        req.completed = completed
         next()
     }
 }

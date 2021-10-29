@@ -14,16 +14,12 @@ router.get('/', (req, res, next) => {
         .catch(next)
 });
 
-router.get('/:id', validateProjectId ,(req, res, next) => {
-    Projects.get(req.params.id)
-        .then(project => {
-            res.status(200).json(project)
-        })
-        .catch(next)
+router.get('/:id', validateProjectId ,(req, res) => {
+    res.json(req.projects)
 })
 
 router.post('/', validateProject ,(req, res, next) => {
-    Projects.insert(req.body)
+    Projects.insert({ name: req.name, description: req.description, completed: req.completed })
         .then(newProjects => {
             res.status(201).json(newProjects)
         })
@@ -31,7 +27,7 @@ router.post('/', validateProject ,(req, res, next) => {
 });
 
 router.put('/:id', validateProjectId, validateProject, (req, res, next) => {
-    Projects.update(req.params.id, req.body)
+    Projects.update(req.params.id, { name: req.name, description: req.description, completed: req.completed })
         .then(updatedProject => {
             res.status(201).json(updatedProject)
         })
