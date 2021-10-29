@@ -17,7 +17,7 @@ async function validateActionId(req, res, next){
 
 function validateAction(req, res, next) {
     const {description, notes, completed, project_id} = req.body
-    if(!description, !project_id, !completed, !project_id, !notes){
+    if(description === undefined|| project_id === undefined || completed === undefined || project_id === undefined|| notes === undefined){
         res.status(400).json({ message: "missing required description, notes and completed status" })
     }else{
         req.description = description
