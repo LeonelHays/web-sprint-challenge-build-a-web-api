@@ -28,8 +28,11 @@ router.post('/', validateProject ,(req, res, next) => {
 
 router.put('/:id', validateProjectId, validateProject, (req, res, next) => {
     Projects.update(req.params.id, { name: req.name, description: req.description, completed: req.completed })
-        .then(updatedProject => {
-            res.status(201).json(updatedProject)
+        .then(() => {
+            return Projects.get(req.params.id)
+        })
+        .then(project => {
+            res.json(project)
         })
         .catch(next)
 })
